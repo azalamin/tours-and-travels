@@ -1,0 +1,46 @@
+Entities:
+User
+Tour
+Location
+Review
+Booking
+
+Collections:
+User 
+{
+    name: 'Rahul',
+    id: 1,
+    email: 'rh@gmail.com',
+    review: [
+        {
+            review: 'Good'
+            rating: 4.5,
+        }
+    ],
+    booking: [
+        {
+            trourName: 'Dhaka to Cox bazar'
+        }
+    ],
+    
+}
+
+
+Tour
+{
+    locations: [
+        {
+            area: 'ST. Martin' 
+        }
+    ]
+}
+
+Relations of Database:
+1. One to One = user: Profile -> Embedding/Referencing
+2. One to Many / Many to One = user: Order -> Embedding
+// Only for mongoDB
+    a. One to Few : user : order[order1, order2, order3,...50] -> Embedding/Referencing
+    b. One to Many : user : comment[comment1, comment2, comment3, ...100000] -> Referencing
+    c. One to Tons : user : chat[Hi, hello, ...100000000] -> Parent Referencing
+3. Many to Many = Actor : Movie
+
