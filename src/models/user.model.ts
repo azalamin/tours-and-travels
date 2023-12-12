@@ -1,4 +1,4 @@
-import mongoose, { model } from "mongoose";
+import mongoose, { Document, Query, model } from "mongoose";
 import { IUser } from "../interfaces/user.interface";
 const { Schema } = mongoose;
 
@@ -36,6 +36,18 @@ const userSchema = new Schema<IUser>({
     default: "active",
   },
 });
+
+// pre find hook/middleware for all kind of find
+userSchema.pre(/^find/, function (this: Query<IUser, Document>, next) {
+  this.find({ userStatus: { $eq: "active" } });
+  next();
+});
+
+// userSchema.pre("findOne", function (next) {
+//   this.findOne({ userStatus: { $ne: "inactive" } });
+
+//   next();
+// });
 
 const User = model<IUser>("user", userSchema);
 
