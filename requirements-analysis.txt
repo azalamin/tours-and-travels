@@ -25,9 +25,9 @@ User
 
 
     booking : [ -> child referencing
-        ObjectId("1d3dfw3d)
-        ObjectId("1d3dfw3d)
-        ObjectId("1d3dfw3d)
+        ObjectId("1d3dfw3d")
+        ObjectId("1d3dfw3d")
+        ObjectId("1d3dfw3d")
     ]
 } 
 
@@ -58,10 +58,10 @@ Movie :
  id : 1,
  name : "Loki",
  actors : [
-    ObjectId("1d3dfw3d)
-    ObjectId("1d3dfw3d)
-    ObjectId("1d3dfw3d)
-    ObjectId("1d3dfw3d)
+    ObjectId("1d3dfw3d")
+    ObjectId("1d3dfw3d")
+    ObjectId("1d3dfw3d")
+    ObjectId("1d3dfw3d")
  ]
 }
 
@@ -70,10 +70,10 @@ Actor :
     id : 1,
     name : "Tom Hiddleston",
     movies: [
-        ObjectId("1d3dfw3d)
-        ObjectId("1d3dfw3d)
-        ObjectId("1d3dfw3d)
-        ObjectId("1d3dfw3d)
+        ObjectId("1d3dfw3d")
+        ObjectId("1d3dfw3d")
+        ObjectId("1d3dfw3d")
+        ObjectId("1d3dfw3d")
     ]
 }
 
@@ -101,9 +101,9 @@ Tour : {
     ]
 
     reviews : [
-    ObjectId ("1d3dfw3d)
-    ObjectId ("1d3dfw3d)
-    ObjectId ("1d3dfw3d)
+    ObjectId ("1d3dfw3d")
+    ObjectId ("1d3dfw3d")
+    ObjectId ("1d3dfw3d")
     ]
 }
 
