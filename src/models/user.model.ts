@@ -49,6 +49,6 @@ userSchema.pre(/^find/, function (this: Query<IUser, Document>, next) {
 //   next();
 // });
 
-const User = model<IUser>("user", userSchema);
+const User = model<IUser>("User", userSchema);
 
 export default User;
