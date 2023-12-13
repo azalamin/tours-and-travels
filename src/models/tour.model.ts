@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 import slugify from "slugify";
-import { ITour } from "../interfaces/tour.interface";
+import { ITour, ITourMethods, TTourModel } from "../interfaces/tour.interface";
 
-const tourSchema = new Schema<ITour>(
+const tourSchema = new Schema<ITour, TTourModel, ITourMethods>(
   {
     name: {
       type: String,
@@ -68,6 +68,28 @@ tourSchema.pre("save", async function (next) {
   next();
 });
 
-const Tour = model("Tour", tourSchema);
+tourSchema.methods.getNearestStartDateAndEndDate = function (): {
+  nextNearestDate: Date | null;
+  estimatedEndDate: Date | null;
+} {
+  const today = new Date();
+  const futureDate = this.startDates.filter((startDate: Date) => {
+    return startDate > today;
+  });
+
+  futureDate.sort((a: Date, b: Date) => a.getTime() - b.getTime());
+
+  const nextNearestDate = futureDate[0];
+  const estimatedEndDate = new Date(
+    nextNearestDate.getTime() + this.durationHours * 60 * 60 * 1000,
+  );
+
+  return {
+    nextNearestDate,
+    estimatedEndDate,
+  };
+};
+
+const Tour = model<ITour, TTourModel>("Tour", tourSchema);
 
 export default Tour;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose, { ModifyResult } from "mongoose";
 import { ITour } from "../interfaces/tour.interface";
 import Tour from "../models/tour.model";
@@ -46,10 +47,22 @@ const deleteSingleTour = async (
   return result;
 };
 
+const getNextSchedule = async (id: string): Promise<any> => {
+  const tour = await Tour.findById(id);
+
+  const nextSchedule = tour?.getNearestStartDateAndEndDate();
+
+  return {
+    tour,
+    nextSchedule,
+  };
+};
+
 export const tourServices = {
   createTour,
   getAllTour,
   getSingleTour,
   updateSingleTour,
   deleteSingleTour,
+  getNextSchedule,
 };
