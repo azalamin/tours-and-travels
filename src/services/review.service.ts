@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose, { ModifyResult } from "mongoose";
 import { IReview } from "../interfaces/review.interface";
 import Review from "../models/review.model";
 
-const createReview = async (ReviewData: IReview): Promise<IReview> => {
-  const result = await Review.create(ReviewData);
+const createReview = async (reviewData: IReview): Promise<IReview> => {
+  const result = await Review.create(reviewData);
+  if (result) {
+    Review.calcAvgRatings(result.tour);
+  }
 
   return result;
 };
@@ -32,6 +36,10 @@ const updateSingleReview = async (
     runValidators: true,
   });
 
+  if (result) {
+    Review.calcAvgRatings(result.tour);
+  }
+
   return result;
 };
 
@@ -44,7 +52,11 @@ const deleteSingleReview = async (
     }
   >
 > => {
-  const result = await Review.findByIdAndDelete(id);
+  const result: any = await Review.findByIdAndDelete(id);
+
+  if (result) {
+    Review.calcAvgRatings(result.tour);
+  }
 
   return result;
 };

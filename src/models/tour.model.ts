@@ -82,14 +82,11 @@ tourSchema.methods.getNearestStartDateAndEndDate = function (): {
   const futureDate = this.startDates.filter((startDate: Date) => {
     return startDate > today;
   });
-
   futureDate.sort((a: Date, b: Date) => a.getTime() - b.getTime());
-
   const nextNearestDate = futureDate[0];
   const estimatedEndDate = new Date(
     nextNearestDate.getTime() + this.durationHours * 60 * 60 * 1000,
   );
-
   return {
     nextNearestDate,
     estimatedEndDate,

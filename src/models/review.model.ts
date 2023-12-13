@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Schema, model } from "mongoose";
-import { IReview } from "../interfaces/review.interface";
+import { IReview, IReviewModel } from "../interfaces/review.interface";
+import Tour from "./tour.model";
 
-const reviewSchema = new Schema<IReview>(
+const reviewSchema = new Schema<IReview, IReviewModel>(
   {
     review: {
       type: String,
@@ -40,6 +42,37 @@ const reviewSchema = new Schema<IReview>(
 
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
-const Review = model<IReview>("Review", reviewSchema);
+reviewSchema.statics.calcAvgRatings = async function (
+  tourId: Schema.Types.ObjectId,
+) {
+  const stats: any = await this.aggregate([
+    {
+      $match: { tour: tourId },
+    },
+    {
+      $group: {
+        _id: "$tour",
+        numberOfRatings: { $sum: 1 },
+        avgRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+
+  console.log(stats);
+
+  if (stats.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingQuantity: stats[0].numberOfRatings,
+      ratingAverage: stats[0].avgRating,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingAverage: 0,
+      ratingQuantity: 0,
+    });
+  }
+};
+
+const Review = model<IReview, IReviewModel>("Review", reviewSchema);
 
 export default Review;

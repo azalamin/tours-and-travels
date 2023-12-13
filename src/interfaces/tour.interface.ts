@@ -16,7 +16,6 @@ interface ITour {
   slug: string;
 }
 
-// Put all user instance methods in this interface:
 interface ITourMethods {
   getNearestStartDateAndEndDate(): {
     nextNearestDate: Date | null;
@@ -24,7 +23,6 @@ interface ITourMethods {
   };
 }
 
-// Create a new Model type that knows about ITourMethods...
 type TTourModel = Model<ITour, {}, ITourMethods>;
 
 export { ITour, ITourMethods, TTourModel };
