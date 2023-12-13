@@ -16,7 +16,7 @@ const getAllTour = async (): Promise<ITour[]> => {
 };
 
 const getSingleTour = async (id: string): Promise<ITour | null> => {
-  const result = await Tour.findById(id);
+  const result = await Tour.findById(id).populate("reviews");
 
   return result;
 };
@@ -49,7 +49,6 @@ const deleteSingleTour = async (
 
 const getNextSchedule = async (id: string): Promise<any> => {
   const tour = await Tour.findById(id);
-
   const nextSchedule = tour?.getNearestStartDateAndEndDate();
 
   return {
